@@ -3,13 +3,18 @@
   margin-top: 1rem;
 }
 
+mat-spinner{
+  margin: 40px auto;
+}
+
+mat-paginator{
+  margin-top: 1rem;
+}
+
 .info-text{
   text-align: center;
 }
 
-mat-spinner{
-  margin: 40px auto;
-}
 
 .post-image {
   max-width: 100%;
