@@ -4,18 +4,18 @@ import { Observable, Observer, of } from "rxjs";
 export const mimeType = (
     control: AbstractControl
 ): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> => {
-    if(control.value === 'string') {
+    if(typeof(control.value) === 'string') {
         return of(null);
     }
     const file = control.value as File;
     const fileReader = new FileReader();
-    fileReader.onloadend = () => {}
-    const frObs = new Observable((observer: Observer<{[key: string]: any}>) => {
+    const frObs = new Observable(
+        (observer: Observer<{[key: string]: any}>) => {
         fileReader.addEventListener("loadend", () => {
             const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4);
             let header = "";
             let isValid = false;
-            for (let i = 0; i<arr.length; i++) {
+            for (let i = 0; i < arr.length; i++) {
                 header += arr[i].toString(16);
             }
             switch (header) {
@@ -36,7 +36,7 @@ export const mimeType = (
             if(isValid) {
                 observer.next(null);
             }else{
-                observer.next({invalidMimeType: true});
+                observer.next({ invalidMimeType: true });
             }
             observer.complete();
         });
